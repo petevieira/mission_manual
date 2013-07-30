@@ -1,0 +1,66 @@
+\documentclass[letterpaper, 10 pt]{report}
+
+% For handling graphics
+\usepackage{graphicx}
+% For colors
+\usepackage{color}
+% For hyperlink
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linktoc=all,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=blue
+}
+% For mathematics
+\usepackage{mathtools}
+\usepackage[margin=1.0in]{geometry}
+
+% -------------------------------------------------------------------------------------
+% TITLE PAGE
+% -------------------------------------------------------------------------------------
+\begin{document}
+\begin{titlepage}
+\center
+% Headings
+\textsc{\LARGE Georgia Institute of Technology}\\[1.5cm]
+\textsc{\large Center for Robotics \& Intelligent Machines}\\[0.5cm]
+\textsc{\large Humanoid Robotics Lab}\\[0.5cm]
+% Title
+\rule{\linewidth}{0.5mm}\\[0.4cm]
+{\huge \bfseries GT Mission Manual}\\[0.4cm]
+\rule{\linewidth}{0.5mm}\\[1.5cm]
+% Author
+\textsc{\normalsize M.X. Grey}\\
+\textsc{\normalsize Eric Huang}\\
+\textsc{\normalsize Andrew Price}\\
+\textsc{\normalsize Peter Vieira}\\[1.5cm]
+% Image
+\includegraphics[width=5.0cm]{resources/hubo-titlepage}
+% Fill rest of page with whitespace
+\vfill
+\end{titlepage}
+
+% -------------------------------------------------------------------------------------
+% MISSION MANUAL
+% -------------------------------------------------------------------------------------
+
+\section*{Outline}
+\begin{itemize}
+\item List of code repos (ensure dependencing are included)
+\item Installation instructions
+\item Running instructions
+\item Operation
+\end{itemize}
+
+% -------------------------------------------------------------------------------------
+% REFERENCES
+% -------------------------------------------------------------------------------------
+%\bibliography{}
+
+% -------------------------------------------------------------------------------------
+% END DOCUMENT
+% -------------------------------------------------------------------------------------
+\end{document}
