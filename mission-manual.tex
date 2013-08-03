@@ -17,6 +17,7 @@
     urlcolor=blue
 }
 \usepackage[margin=1.0in]{geometry}
+\usepackage{listings}
 
 \setcounter{secnumdepth}{-2}
 % -------------------------------------------------------------------------------------
@@ -151,6 +152,7 @@ Code repositories that use ros-groovy.
 % RUBBLE CLEARING INTRO
 %
 \section{Rubble Clearing Task}\label{sec:rubble-clearing-task}
+\subsection{Procedure}
 \begin{enumerate}
 \item Identify the location of the rubble/door using robot/human judgement from robot perception feedback.
 \item Walk to the rubble and face it using the hubo\_walk panel.
@@ -236,48 +238,47 @@ This section describes how to make Hubo walk. And assumes the robot is already u
 \subsection{Manipulation}
 This section describes how to teleoperate Hubo in order to dual-arm manipulate objects in the environment.
 \begin{enumerate}
-  \item ssh to the hubo-vision PC
-    \begin{itemize}
-      \item ssh hubo-vision
-    \end{itemize}
-  \item Export the ROS\_MASTER to use your local PC's ROS\_MASTER
-    \begin{itemize}
-      \item export ROS\_MASTER\_URI=http://YOUR\_LOCAL\_MACHINE
-    \end{itemize}
-  \item Start the camera node
-    \begin{itemize}
-      \item roslaunch openni\_launch openni.launch
-    \end{itemize}
-  \item Start the manipulation planner
-    \begin{itemize} 
-      \item roslaunch\ hubo\_manipulation\_planner manipulation\_pipeline.launch
-    \end{itemize}
-  \item To view the camera image
-    \begin{itemize}
-      \item roslaunch hubo\_motion\_ros hubo\_manipulation.launch
-    \end{itemize}
-  \item To visualize Hubo's joint states
-    \begin{itemize}
-      \item roslaunch hubo\_motion\_ros hubo\_state.launch
-    \end{itemize}
+  \item If you haven't already, start up ROS
+    \begin{lstlisting}[language=bash]
+  		$ roscore
+  		$ rosrun rviz rviz
+	\end{lstlisting}
+  \item Start the teleoperation interface
+    \begin{lstlisting}[language=bash]
+  		$ roslaunch hubo_motion_ros fullbody_teleop.launch
+	\end{lstlisting}
 \end{enumerate}
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=12.0cm]{figures/pickup-drill-rviz}
+    \caption{Picture of teleoperation of picking up a drill.}
+    \label{fig:pickup-drill-rviz-image}
+  \end{figure}
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[width=12.0cm]{figures/teleop-rosgraph}
+    \caption{Simplified ROS Graph created by fullbody\_teleop.launch.}
+    \label{fig:teleop-rosgraph-image}
+  \end{figure}
 
 
 % -------------------------------------------------------------------------------------
 % TROUBLESHOOTING
 %
-\newpage
+\clearpage
 \section{Troubleshooting}\label{sec:troubleshooting}
-\begin{table}[h]
+\begin{table}[ht]
   \centering
   \caption{Troubleshooting Table}
   \begin{tabular}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|} \hline
-    \multicolumn{1}{|c|}{Symptom} & \multicolumn{1}{|c|}{Causes} &       \multicolumn{1}{|c|}{Solution} \\ \hline
+    \multicolumn{1}{|c|}{Symptom} & \multicolumn{1}{|c|}{Causes} & \multicolumn{1}{|c|}{Solution} \\ \hline
     Can't ssh to Hubo's PC & Not on correct network. \newline Hubo's PC is stuck in the Grub menu & Connect to the correct network. \newline Connect a monitor and keyboard to Hubo's PC and debug, or just a keyboard and press enter. \\
     \hline
-    Can't connect to the robot in RViz panel & Not on the correct network. \newline The daemons are not running on Hubo & Connect to the correct network. \newline Ensure daemons are running by typing \textit{ps aux | grep daemon} or restarting Hubo and running \textit{sudo service hubo-motion start}.  \\
+    Can't connect to the robot in RViz panel & Not on the correct network. \newline The daemons are not running on Hubo & Connect to the correct network. \newline Ensure daemons are running by typing \textit{ps aux $|$ grep daemon} or restarting Hubo and running \textit{sudo service hubo-motion start}.  \\
     \hline
-     &  &  \\
+    Receiving ACH\_OVERFLOW from rviz command. \newline HuboInitPanel joint names don't showing up correctly. & Don't have matching or most up-to-date installs of hubo-ach, hubo-motion-rt, hubomz or possible another repo. & Make sure your on the right branch in each repo and reinstall on both machines. \\
+    \hline
+    Robot homes only the upper or lower body, or neither. & CAN line got corrupted. & Shutdown and turn off the Hubo PC and turn it back on and try again. \\
     \hline
   \end{tabular} \label{tbl:troubleshooting}
 \end{table}
