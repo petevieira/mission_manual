@@ -54,8 +54,9 @@
 % -------------------------------------------------------------------------------------
 % CODE REPOS
 %
-\section{Code Repositories}\label{sec:code-repos}
-\subsection{Real-time Code}
+\chapter{Code Repositories}\label{chap:code-repos}
+The following code repositories are required in order to execute our tasks using our code. They consist of real-time processes that run on the robot, and code that uses ROS and runs mostly on a local computer.
+\section{Real-time Code}
 Code repositories that run in real-time on the robot.
 \begin{itemize}
 \item hubo-ach
@@ -80,7 +81,7 @@ Code repositories that run in real-time on the robot.
 	  \end{itemize}
   \end{itemize}
 \end{itemize}
-\subsection{ROS Code}
+\section{ROS Code}
 Code repositories that use ros-groovy.
 \begin{itemize}
 \item hubo\_init
@@ -125,6 +126,7 @@ Code repositories that use ros-groovy.
 % -------------------------------------------------------------------------------------
 % WALL DRILLING INTRO
 %
+\chapter{Tasks Overview}
 \section{Wall Drilling Task}\label{wall-drilling-task}
 
 \subsection{Procedure}
@@ -150,7 +152,8 @@ Code repositories that use ros-groovy.
 % -------------------------------------------------------------------------------------
 % RUBBLE CLEARING INTRO
 %
-\section{Rubble Clearing Task}\label{sec:rubble-clearing-task}
+\section{Rubble Clearing Task}\label{chap:rubble-clearing-task}
+\subsection{Procedure}
 \begin{enumerate}
 \item Identify the location of the rubble/door using robot/human judgement from robot perception feedback.
 \item Walk to the rubble and face it using the hubo\_walk panel.
@@ -169,9 +172,9 @@ Code repositories that use ros-groovy.
 % -------------------------------------------------------------------------------------
 % INSTRUCTIONS
 %
-\section{Operation Instructions}\label{sec:operating-instructions}
+\chapter{Operation Instructions}\label{chap:operating-instructions}
 This section details how to operate Hubo from the initialization phase to execution of the tasks. The different phases include \textit{Starting-up Hubo}, \textit{Starting-up Perception}, \textit{Walking}, and \textit{Teleop Manipulation}.
-\subsection{Starting-up Hubo}
+\section{Starting-up Hubo}
 This section describes how to start-up Hubo.
 \begin{enumerate}
   \item ssh hubo@192.168.0.201
@@ -208,10 +211,10 @@ This section describes how to start-up Hubo.
   \item Click on the \textit{Sensor State} tab and ensure the sensor values are updating and are reasonable. If they aren't, then restart the whole process.
 \end{enumerate}
 
-\subsection{Starting-up Perception}
+\section{Starting-up Perception}
 This section describes how to get the perception pipeline up and running. 
 
-\subsection{Walking}
+\section{Walking}
 This section describes how to make Hubo walk. And assumes the robot is already up and running and standing on the ground on two feet.
   \begin{enumerate}
     \item Click on the \textit{HuboWalkPanel} tab.
@@ -233,7 +236,7 @@ This section describes how to make Hubo walk. And assumes the robot is already u
     \item The squat height of the robot can be adjusted by sliding the \textit{Height} slider up and down, which automatically sends the command to the robot.
   \end{enumerate}
 
-\subsection{Manipulation}
+\section{Manipulation}
 This section describes how to teleoperate Hubo in order to dual-arm manipulate objects in the environment.
 \begin{enumerate}
   \item ssh to the hubo-vision PC
@@ -267,8 +270,8 @@ This section describes how to teleoperate Hubo in order to dual-arm manipulate o
 % TROUBLESHOOTING
 %
 \newpage
-\section{Troubleshooting}\label{sec:troubleshooting}
-\begin{table}[h]
+\chapter{Troubleshooting}\label{chap:troubleshooting}
+\begin{table}[ht]
   \centering
   \caption{Troubleshooting Table}
   \begin{tabular}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|} \hline
@@ -290,5 +293,5 @@ This section describes how to teleoperate Hubo in order to dual-arm manipulate o
 
 % -------------------------------------------------------------------------------------
 % END DOCUMENT
-% -------------------------------------------------------------------------------------
+% --------s-----------------------------------------------------------------------------
 \end{document}
