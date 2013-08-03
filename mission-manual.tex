@@ -18,8 +18,6 @@
     linkcolor=black,
     urlcolor=blue
 }
-% For mathematics
-\usepackage{mathtools}
 \usepackage[margin=1.0in]{geometry}
 
 % -------------------------------------------------------------------------------------
@@ -50,48 +48,75 @@
 % -------------------------------------------------------------------------------------
 % MISSION MANUAL
 % -------------------------------------------------------------------------------------
-\section*{Outline}
-\begin{itemize}
-\item List of code repos (ensure dependencing are included)
-\item Installation instructions
-\item Running instructions
-\item Operation
-\end{itemize}
 
+% -------------------------------------------------------------------------------------
+% CODE REPOS
+%
 \section*{Code Repositories}\label{sec:code-repos}
-\subsection*{ROS Code}
-\begin{itemize}
-\item hubo\_init
-	\begin{itemize}
-	\item \url{https://github.com/hubo/hubo\_init/}
-	\end{itemize}
-\item hubo\_walk
-	\begin{itemize}
-	\item \url{https://github.com/hubo/hubo\_walk}
-	\end{itemize}
-\item hubo\_motion\_ros
-	\begin{itemize}
-	\item \url{https://github.com/a-price/hubo\_motion\_ros}
-	\end{itemize}
-\item hubo\_manipulation\_planner
-	\begin{itemize}
-	\item \url{https://github.com/hubo/hubo\_manipulation\_planner}
-	\end{itemize}
-\end{itemize}
 \subsection*{Real-time Code}
+Code repositories that run in real-time on the robot.
 \begin{itemize}
 \item hubo-ach
-	\begin{itemize}
+  \begin{itemize}
 	\item \url{https://github.com/hubo/hubo-ach}
-	\end{itemize}
+	  \begin{itemize}
+	    \item Dependencies: \textit{ach, libreadline.}
+	  \end{itemize}
+  \end{itemize}
 \item hubo-motion-rt
 	\begin{itemize}
 	\item \url{https://github.com/hubo/hubo-motion-rt}
-	\end{itemize}
+	  \begin{itemize}
+	    \item Dependencies: \textit{hubo-ach, RobotKin, urdfdom, eigen3.}
+	  \end{itemize}
+  \end{itemize}
 \item hubomz
-	\begin{itemize}
+  \begin{itemize}
 	\item \url{https://github.com/golems/hubomz}
-	\end{itemize}
+	  \begin{itemize}
+	    \item Dependencies: \textit{hubo-ach, hubo-motion-rt, expat, freeglut3.} 
+	  \end{itemize}
+  \end{itemize}
+\end{itemize}
+\subsection*{ROS Code}
+Code repositories that use ros-groovy.
+\begin{itemize}
+\item hubo\_init
+  \begin{itemize}
+	\item \url{https://github.com/hubo/hubo\_init/}
+	  \begin{itemize}
+	    \item Dependencies: \textit{hubo-ach}
+	  \end{itemize}
+  \end{itemize}
+\item hubo\_walk
+  \begin{itemize}
+	\item \url{https://github.com/hubo/hubo\_walk}
+	  \begin{itemize}
+	    \item Dependencies: \textit{hubo-motion-rt, hubomz}
+	  \end{itemize}
+  \end{itemize}
+\item hubo\_urdf
+  \begin{itemize}
+    \item \url{https://github.com/a-price/hubo\_urdf}
+  \end{itemize}
+\item rgbd\_graph\_segmentation
+  \begin{itemize}
+    \item \url{https://github.com/a-price/rgbd\_graph\_segmentation}
+  \end{itemize}
+\item hubo\_motion\_ros
+  \begin{itemize}
+	\item \url{https://github.com/a-price/hubo\_motion\_ros}
+	  \begin{itemize}
+	    \item Dependencies: \textit{hubo\_urdf, rgbd\_graph\_segmentation, ros-groovy-control-msgs}
+	  \end{itemize}
+  \end{itemize}
+\item hubo\_manipulation\_planner
+  \begin{itemize}
+	\item \url{https://github.com/hubo/hubo\_manipulation\_planner}
+	  \begin{itemize}
+	    \item Dependencies: \textit{hubo\_urdf, rgbd\_graph\_segmentation, ros-groovy-control-msgs}
+	  \end{itemize}
+  \end{itemize}
 \end{itemize}
 \newpage
 
@@ -111,7 +136,7 @@
 \item Send the points in 6-dimensions to the manipulation daemon using the end-effector interpolation mode to drill the object out.
 \item Remove drill from wall and place on table or drop.
 \end{enumerate}
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=5.0cm]{resources/wall-drilling}
   \caption{Picture of example target to drill out.}
@@ -130,7 +155,7 @@
 \item Begin static balancing and squat to height which allows picking up rubble items.
 \item Use dual-arm teleoperation to pick up the pieces of rubble and toss them to the side.
 \end{enumerate}
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
   \includegraphics[width=5.0cm]{resources/rubble-clearing}
   \caption{Picture of example rubble scene.}
@@ -156,14 +181,14 @@ This section describes how to start-up Hubo.
     	  \item rosrun rviz rviz
     	  \item Click on the \textit{HuboInitPanel} panel tab.
     \end{itemize}
-  \begin{figure}[h]
+  \begin{figure}[ht]
     \centering
     \includegraphics[width=15.0cm]{resources/hubo-init.pdf}
     \caption{Picture of hubo\_init panel.}
     \label{fig:hubo-init-image}
   \end{figure}
   \item Ensure "IP Address" is correct.
-  \item Click "Connect" to send and receive ach channels between Hubo's computer and the remote computer. If it won't connect see \Cref{sec:troubleshooting}.
+  \item Click "Connect" to send and receive ach channels between Hubo's computer and the remote computer. If it won't connect see %\Cref{sec:troubleshooting}.
   \item Click "Home All" to home all of Hubo's joints, if not on the ground and not homed. If already homed and standing, continue skip to step.
   \item If any active joints do not home, indicated by the color in the \textit{Joint State} section not being gray, click the "Rehome". Button color meanings are
     \begin{itemize}
@@ -188,14 +213,14 @@ This section describes how to get the perception pipeline up and running.
 This section describes how to make Hubo walk. And assumes the robot is already up and running and standing on the ground on two feet.
   \begin{enumerate}
     \item Click on the \textit{HuboWalkPanel} tab.
-    \begin{figure}[h]
+    \begin{figure}[ht]
       \centering
       \includegraphics[width=15.0cm]{resources/hubo-walk.pdf}
       \caption{Picture of hubo\_walk panel.}
       \label{fig:hubo-walk-image}
     \end{figure}
     \item Ensure the IP Address is correct.
-    \item Click "Connect" to send and receive ach channels between Hubo's computer and the remote computer. If it won't connect see \cref{sec:troubleshooting}.
+    \item Click "Connect" to send and receive ach channels between Hubo's computer and the remote computer. If it won't connect see %\cref{sec:troubleshooting}.
     \item Click the \textit{Joystick} radio button if it is not already selected.
     \item Based on vision feedback enter desired walk distance, max number of steps, and turn-in-place angle (for turning in place).
     \item Click the "Go Quad" button to transition into quadruped mode.
@@ -248,7 +273,7 @@ This section describes how to teleoperate Hubo in order to dual-arm manipulate o
     \multicolumn{1}{|c|}{Symptom} & \multicolumn{1}{|c|}{Causes} &       \multicolumn{1}{|c|}{Solution} \\ \hline
     Can't ssh to Hubo's PC & Not on correct network. \newline Hubo's PC is stuck in the Grub menu & Connect to the correct network. \newline Connect a monitor and keyboard to Hubo's PC and debug, or just a keyboard and press enter. \\
     \hline
-    Can't connect to the robot in RViz panel & Not on the correct network. \newline The daemons are not running on Hubo & Connect to the correct network. \newline Ensure daemons are running by typing \textit{ps aux | grep daemon} or restarting Hubo and running \textit{sudo service hubo-motion start}.  \\
+    Can't connect to the robot in RViz panel & Not on the correct network. \newline The daemons are not running on Hubo & Connect to the correct network. \newline Ensure daemons are running by typing \textit{ps aux $|$ grep daemon} or restarting Hubo and running \textit{sudo service hubo-motion start}. \\
     \hline
      &  &  \\
     \hline
