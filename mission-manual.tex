@@ -1,7 +1,11 @@
 \documentclass[letterpaper, 10 pt]{report}
 
+% For references
+\usepackage{cleveref}
 % For handling graphics
 \usepackage{graphicx}
+% For multirows in tables
+\usepackage{multirow}
 % For colors
 \usepackage{color}
 % For hyperlink
@@ -54,7 +58,7 @@
 \item Operation
 \end{itemize}
 
-\section*{Code Repositories}
+\section*{Code Repositories}\label{sec:code-repos}
 \subsection*{ROS Code}
 \begin{itemize}
 \item hubo\_init
@@ -94,7 +98,7 @@
 % -------------------------------------------------------------------------------------
 % WALL DRILLING INTRO
 %
-\section*{Wall Drilling Task}
+\section*{Wall Drilling Task}\label{wall-drilling-task}
 
 \subsection*{Procedure}
 \begin{enumerate}
@@ -119,7 +123,7 @@
 % -------------------------------------------------------------------------------------
 % RUBBLE CLEARING INTRO
 %
-\section*{Rubble Clearing Task}
+\section*{Rubble Clearing Task}\label{sec:rubble-clearing-task}
 \begin{enumerate}
 \item Identify the location of the rubble/door using robot/human judgement from robot perception feedback.
 \item Walk to the rubble and face it using the hubo\_walk panel.
@@ -138,8 +142,10 @@
 % -------------------------------------------------------------------------------------
 % INSTRUCTIONS
 %
-\section*{Operation Instructions}
-\subsection*{Starting up Hubo}
+\section*{Operation Instructions}\label{sec:operating-instructions}
+This section details how to operate Hubo from the initialization phase to execution of the tasks. The different phases include \textit{Starting-up Hubo}, \textit{Starting-up Perception}, \textit{Walking}, and \textit{Teleop Manipulation}.
+\subsection*{Starting-up Hubo}
+This section describes how to start-up Hubo.
 \begin{enumerate}
   \item ssh hubo@192.168.0.201
   \item Turn on motor controllers with remote
@@ -148,6 +154,7 @@
     \begin{itemize}
     	  \item roscore
     	  \item rosrun rviz rviz
+    	  \item Click on the \textit{HuboInitPanel} panel tab.
     \end{itemize}
   \begin{figure}[h]
     \centering
@@ -156,14 +163,98 @@
     \label{fig:hubo-init-image}
   \end{figure}
   \item Ensure "IP Address" is correct.
-  \item Click "Connect" to push and pull ach channels between Hubo's computer and the remote computer.
+  \item Click "Connect" to send and receive ach channels between Hubo's computer and the remote computer. If it won't connect see \Cref{sec:troubleshooting}.
   \item Click "Home All" to home all of Hubo's joints, if not on the ground and not homed. If already homed and standing, continue skip to step.
-  \item If any active joints do not home, indicated by the color in the \textit{Joint State} section not being gray.
+  \item If any active joints do not home, indicated by the color in the \textit{Joint State} section not being gray, click the "Rehome". Button color meanings are
+    \begin{itemize}
+      \item GRAY: homed
+      \item PURPLE: not homed
+      \item RED: error
+      \item WHITE: inactive
+    \end{itemize}
+  \item If any joints won't home, you can do one of two options:
+    \begin{enumerate}
+      \item Run sudo service hubo-motion stop, run sudo servi	ce hubo-motion start, and then start the process over again.
+      \item Click the \textit{Reset} radio button and then click the joint(s) that won't home. Then click the \textit{Home} radio button and click the joint(s) that didn't home. Then press the "Rehome" button again.
+    \end{enumerate}
+  \item Once the joints are all homed, press the "Start Sensors" button to initialize the IMU and Force/Torque sensors.
+  \item Click on the \textit{Sensor State} tab and ensure the sensor values are updating and are reasonable. If they aren't, then restart the whole process.
 \end{enumerate}
+
+\subsection*{Starting-up Perception}
+This section describes how to get the perception pipeline up and running. 
+
+\subsection*{Walking}
+This section describes how to make Hubo walk. And assumes the robot is already up and running and standing on the ground on two feet.
+  \begin{enumerate}
+    \item Click on the \textit{HuboWalkPanel} tab.
+    \begin{figure}[h]
+      \centering
+      \includegraphics[width=15.0cm]{resources/hubo-walk.pdf}
+      \caption{Picture of hubo\_walk panel.}
+      \label{fig:hubo-walk-image}
+    \end{figure}
+    \item Ensure the IP Address is correct.
+    \item Click "Connect" to send and receive ach channels between Hubo's computer and the remote computer. If it won't connect see \cref{sec:troubleshooting}.
+    \item Click the \textit{Joystick} radio button if it is not already selected.
+    \item Based on vision feedback enter desired walk distance, max number of steps, and turn-in-place angle (for turning in place).
+    \item Click the "Go Quad" button to transition into quadruped mode.
+    \item Click the walk command desired to get to your desired goal. (Eventually the interface will use a desired location and orientation, and the ZMP walk generator will create a footstep plan to get there.) The \textit{Walk Continuously} checkbox determines whether or not to walk the specified distance or walk until receiving a stop command. The \textit{ZMP State} section at the bottom of the panel display the state of the ZMP walker generator.
+    \item Click "Go Biped" to get back up on two feet in order to manipulate objects.
+    \item In the \textit{Balance Commands} section of the panel, click "Balance" to go into static balancing mode.
+    \item The x-location of the center of mass can be adjusted in the \textit{COM-X Offset (m)} field. Then click the "Balance" button to send the command.
+    \item The squat height of the robot can be adjusted by sliding the \textit{Height} slider up and down, which automatically sends the command to the robot.
+  \end{enumerate}
+
+\subsection*{Manipulation}
+This section describes how to teleoperate Hubo in order to dual-arm manipulate objects in the environment.
+\begin{enumerate}
+  \item ssh to the hubo-vision PC
+    \begin{itemize}
+      \item ssh hubo-vision
+    \end{itemize}
+  \item Export the ROS\_MASTER to use your local PC's ROS\_MASTER
+    \begin{itemize}
+      \item export ROS\_MASTER\_URI=http://YOUR\_LOCAL\_MACHINE
+    \end{itemize}
+  \item Start the camera node
+    \begin{itemize}
+      \item roslaunch openni\_launch openni.launch
+    \end{itemize}
+  \item Start the manipulation planner
+    \begin{itemize} 
+      \item roslaunch\ hubo\_manipulation\_planner manipulation\_pipeline.launch
+    \end{itemize}
+  \item To view the camera image
+    \begin{itemize}
+      \item roslaunch hubo\_motion\_ros hubo\_manipulation.launch
+    \end{itemize}
+  \item To visualize Hubo's joint states
+    \begin{itemize}
+      \item roslaunch hubo\_motion\_ros hubo\_state.launch
+    \end{itemize}
+\end{enumerate}
+
 
 % -------------------------------------------------------------------------------------
 % TROUBLESHOOTING
 %
+\newpage
+\section*{Troubleshooting}\label{sec:troubleshooting}
+\begin{table}[h]
+  \centering
+  \caption{Troubleshooting Table}
+  \begin{tabular}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|} \hline
+    \multicolumn{1}{|c|}{Symptom} & \multicolumn{1}{|c|}{Causes} &       \multicolumn{1}{|c|}{Solution} \\ \hline
+    Can't ssh to Hubo's PC & Not on correct network. \newline Hubo's PC is stuck in the Grub menu & Connect to the correct network. \newline Connect a monitor and keyboard to Hubo's PC and debug, or just a keyboard and press enter. \\
+    \hline
+    Can't connect to the robot in RViz panel & Not on the correct network. \newline The daemons are not running on Hubo & Connect to the correct network. \newline Ensure daemons are running by typing \textit{ps aux | grep daemon} or restarting Hubo and running \textit{sudo service hubo-motion start}.  \\
+    \hline
+     &  &  \\
+    \hline
+  \end{tabular} \label{tbl:troubleshooting}
+\end{table}
+
 
 % -------------------------------------------------------------------------------------
 % REFERENCES
