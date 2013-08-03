@@ -259,20 +259,13 @@ This section describes how to teleoperate Hubo in order to dual-arm manipulate o
     \begin{itemize}
       \item roslaunch hubo\_motion\_ros hubo\_state.launch
     \end{itemize}
-    \begin{figure}[ht]
-    \centering
-    \includegraphics[width=10.0cm]{figures/pickup-drill-rviz}
-    \caption{Picture of hubo\_init panel.}
-    \label{fig:pickup-drill-rviz-image}
-    \end{figure}
 \end{enumerate}
 
 
 % -------------------------------------------------------------------------------------
 % TROUBLESHOOTING
 %
-
-\newpage 
+\newpage
 \section*{Troubleshooting}\label{sec:troubleshooting}
 \begin{table}[h]
   \centering
@@ -281,7 +274,7 @@ This section describes how to teleoperate Hubo in order to dual-arm manipulate o
     \multicolumn{1}{|c|}{Symptom} & \multicolumn{1}{|c|}{Causes} &       \multicolumn{1}{|c|}{Solution} \\ \hline
     Can't ssh to Hubo's PC & Not on correct network. \newline Hubo's PC is stuck in the Grub menu & Connect to the correct network. \newline Connect a monitor and keyboard to Hubo's PC and debug, or just a keyboard and press enter. \\
     \hline
-    Can't connect to the robot in RViz panel & Not on the correct network. \newline The daemons are not running on Hubo & Connect to the correct network. \newline Ensure daemons are running by typing \textit{ps aux $|$ grep daemon} or restarting Hubo and running \textit{sudo service hubo-motion start}. \\
+    Can't connect to the robot in RViz panel & Not on the correct network. \newline The daemons are not running on Hubo & Connect to the correct network. \newline Ensure daemons are running by typing \textit{ps aux | grep daemon} or restarting Hubo and running \textit{sudo service hubo-motion start}.  \\
     \hline
      &  &  \\
     \hline
