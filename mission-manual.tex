@@ -167,15 +167,13 @@ This section details how to operate Hubo from the initialization phase to execut
 \section{Starting-up Hubo}
 This section describes how to start-up Hubo.
 \begin{enumerate}
-  \item Connect to Hubo's computer using ssh.
+  \item Turn on motor controllers with remote
+  \item Connect to Hubo's computer using ssh, and start the pipeline.
   \begin{lstlisting}[language=bash]
   $ ssh hubo@192.168.0.201
-  \end{lstlisting}
-  \item Turn on motor controllers with remote
-  \begin{lstlisting}[language=bash]
   $ ssh sudo service hubo-motion start
   \end{lstlisting}
-  \item launch RViz
+  \item On your local computer (outside of the ssh sesion), launch RViz
   \begin{lstlisting}[language=bash]
   $ roscore
   $ rosrun rviz rviz
@@ -199,8 +197,8 @@ This section describes how to start-up Hubo.
     \end{itemize}
   \item If any joints won't home, you can do one of two options:
     \begin{enumerate}
-      \item Run sudo service hubo-motion stop, run sudo servi	ce hubo-motion start, and then start the process over again.
-      \item Click the \textit{Reset} radio button and then click the joint(s) that won't home. Then click the \textit{Home} radio button and click the joint(s) that didn't home. Then press the "Rehome" button again.
+      \item Click the \textit{Reset} radio button and then click the joint(s) that won't home. Then click the \textit{Home} radio button and click the joint(s) that didn't home. Then press the ``Rehome'' button again.
+      \item Run ``sudo service hubo-motion stop'', turn off the motor power, wait a moment, turn it back on, and run ``sudo service hubo-motion start''. Then try homing again from the beginning.
     \end{enumerate}
   \item Once the joints are all homed, press the "Start Sensors" button to initialize the IMU and Force/Torque sensors.
   \item Click on the \textit{Sensor State} tab and ensure the sensor values are updating and are reasonable. If they aren't, then restart the whole process.
@@ -228,12 +226,11 @@ This section describes how to make Hubo walk. And assumes the robot is already u
       \label{fig:hubo-walk-image}
     \end{figure}
     \item Ensure the IP Address is correct.
-    \item Click "Connect" to send and receive ach channels between Hubo's computer and the remote computer. If it won't connect see the Troubleshooting section.
-    \item Click the \textit{Joystick} radio button if it is not already selected.
+    \item Click ``Connect'' to send and receive ach channels between Hubo's computer and the remote computer. If it won't connect see the Troubleshooting section.
     \item Based on vision feedback enter desired walk distance, max number of steps, and turn-in-place angle (for turning in place).
-    \item Click the "Go Quad" button to transition into quadruped mode.
+    \item Click the ``Go Quad'' button to transition into quadruped mode.
     \item Click the walk command desired to get to your desired goal. (Eventually the interface will use a desired location and orientation, and the ZMP walk generator will create a footstep plan to get there.) The \textit{Walk Continuously} checkbox determines whether or not to walk the specified distance or walk until receiving a stop command. The \textit{ZMP State} section at the bottom of the panel display the state of the ZMP walker generator.
-    \item Click "Go Biped" to get back up on two feet in order to manipulate objects.
+    \item Click ``Go Biped'' to get back up on two feet in order to manipulate objects.
     \item In the \textit{Balance Commands} section of the panel, click "Balance" to go into static balancing mode.
     \item The x-location of the center of mass can be adjusted in the \textit{COM-X Offset (m)} field. Then click the "Balance" button to send the command.
     \item The squat height of the robot can be adjusted by sliding the \textit{Height} slider up and down, which automatically sends the command to the robot.
@@ -269,6 +266,23 @@ NB: First install all software outlined in \nameref{chap:code-repos}
   \end{figure}
 
 
+
+% -------------------------------------------------------------------------------------
+% Upocoming Features
+%
+\pagebreak
+\section{Upcoming Features}
+This section lists the features which we intend to implement and stabilize prior to the DRC. Many of these
+features we consider to be crucial for successful teleoperation of the task.
+
+\begin{enumerate}
+  \item End effector Force-Torque workspace control
+  \item Cooperative dual-arm manipulation
+  \item Simultaneous dual-arm manipulation
+  \item Human-assisted planning phase for collision avoidance
+\end{enumerate}
+
+
 % -------------------------------------------------------------------------------------
 % TROUBLESHOOTING
 %
@@ -279,11 +293,11 @@ NB: First install all software outlined in \nameref{chap:code-repos}
   \caption{Troubleshooting Table}
   \begin{tabular}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|} \hline
     \multicolumn{1}{|c|}{Symptom} & \multicolumn{1}{|c|}{Causes} & \multicolumn{1}{|c|}{Solution} \\ \hline
-    Can't ssh to Hubo's PC & Not on correct network. \newline Hubo's PC is stuck in the Grub menu & Connect to the correct network. \newline Connect a monitor and keyboard to Hubo's PC and debug, or just a keyboard and press enter. \\
+    Can't ssh to Hubo's PC & \begin{enumerate} \item Not on correct network. \item Hubo's PC is stuck in the Grub menu \end{enumerate} & \begin{enumerate} \item Connect to the correct network. \item Connect a monitor and keyboard to Hubo's PC and debug, or just a keyboard and press enter. \end{enumerate} \\
     \hline
-    Can't connect to the robot in RViz panel & Not on the correct network. \newline The daemons are not running on Hubo & Connect to the correct network. \newline Ensure daemons are running by typing \textit{ps aux $|$ grep daemon} or restarting Hubo and running \textit{sudo service hubo-motion start}.  \\
+    Can't connect to the robot in RViz panel & \begin{enumerate} \item Not on the correct network. \item The daemons are not running on Hubo \end{enumerate} & \begin{enumerate} \item Connect to the correct network. \item Ensure daemons are running by typing \textit{ps aux $|$ grep daemon} or restarting Hubo and running \textit{sudo service hubo-motion start}. \end{enumerate} \\
     \hline
-    Receiving ACH\_OVERFLOW from rviz command. \newline HuboInitPanel joint names don't showing up correctly. & Don't have matching or most up-to-date installs of hubo-ach, hubo-motion-rt, hubomz or possible another repo. & Make sure your on the right branch in each repo and reinstall on both machines. \\
+    Receiving ACH\_OVERFLOW from rviz command. \newline HuboInitPanel joint names don't showing up correctly. & Don't have matching or most up-to-date installs of hubo-ach, hubo-motion-rt, hubomz or possible another repo. & Make sure you are on the right branch in each repo and reinstall on both machines. \\
     \hline
     Robot homes only the upper or lower body, or neither. & CAN line got corrupted. & Shutdown and turn off the Hubo PC and turn it back on and try again. \\
     \hline
