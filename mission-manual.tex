@@ -55,8 +55,9 @@
 % -------------------------------------------------------------------------------------
 % CODE REPOS
 %
-\section{Code Repositories}\label{sec:code-repos}
-\subsection{Real-time Code}
+\chapter{Code Repositories}\label{chap:code-repos}
+The following code repositories are required in order to execute our tasks using our code. They consist of real-time processes that run on the robot, and code that uses ROS and runs mostly on a local computer.
+\section{Real-time Code}
 Code repositories that run in real-time on the robot.
 \begin{itemize}
 \item hubo-ach
@@ -81,7 +82,7 @@ Code repositories that run in real-time on the robot.
 	  \end{itemize}
   \end{itemize}
 \end{itemize}
-\subsection{ROS Code}
+\section{ROS Code}
 Code repositories that use ros-groovy.
 \begin{itemize}
 \item hubo\_init : GUI for initializing Hubo and controlling hubo-ach level settings
@@ -115,6 +116,7 @@ Code repositories that use ros-groovy.
 % -------------------------------------------------------------------------------------
 % WALL DRILLING INTRO
 %
+\chapter{Tasks Overview}
 \section{Wall Drilling Task}\label{wall-drilling-task}
 
 \subsection{Procedure}
@@ -140,7 +142,7 @@ Code repositories that use ros-groovy.
 % -------------------------------------------------------------------------------------
 % RUBBLE CLEARING INTRO
 %
-\section{Rubble Clearing Task}\label{sec:rubble-clearing-task}
+\section{Rubble Clearing Task}\label{chap:rubble-clearing-task}
 \subsection{Procedure}
 \begin{enumerate}
 \item Identify the location of the rubble/door using robot/human judgement from robot perception feedback.
@@ -160,20 +162,25 @@ Code repositories that use ros-groovy.
 % -------------------------------------------------------------------------------------
 % INSTRUCTIONS
 %
-\section{Operation Instructions}\label{sec:operating-instructions}
+\chapter{Operation Instructions}\label{chap:operating-instructions}
 This section details how to operate Hubo from the initialization phase to execution of the tasks. The different phases include \textit{Starting-up Hubo}, \textit{Starting-up Perception}, \textit{Walking}, and \textit{Teleop Manipulation}.
-\subsection{Starting-up Hubo}
+\section{Starting-up Hubo}
 This section describes how to start-up Hubo.
 \begin{enumerate}
-  \item ssh hubo@192.168.0.201
+  \item Connect to Hubo's computer using ssh.
+  \begin{lstlisting}[language=bash]
+  $ ssh hubo@192.168.0.201
+  \end{lstlisting}
   \item Turn on motor controllers with remote
-  \item sudo service hubo-motion start
+  \begin{lstlisting}[language=bash]
+  $ ssh sudo service hubo-motion start
+  \end{lstlisting}
   \item launch RViz
-    \begin{itemize}
-    	  \item roscore
-    	  \item rosrun rviz rviz
-    	  \item Click on the \textit{HuboInitPanel} panel tab.
-    \end{itemize}
+  \begin{lstlisting}[language=bash]
+  $ roscore
+  $ rosrun rviz rviz
+  \end{lstlisting}
+  \item Click on the \textit{HuboInitPanel} panel tab.
   \begin{figure}[ht]
     \centering
     \includegraphics[width=15.0cm]{figures/hubo-init.pdf}
@@ -209,7 +216,8 @@ Or, hopefully when everything gets straightened out, it will be like:
     $ roslaunch hubo_vision_common full.launch
   \end{lstlisting}
 
-\subsection{Walking}
+\pagebreak
+\section{Walking}
 This section describes how to make Hubo walk. And assumes the robot is already up and running and standing on the ground on two feet.
   \begin{enumerate}
     \item Click on the \textit{HuboWalkPanel} tab.
@@ -230,21 +238,21 @@ This section describes how to make Hubo walk. And assumes the robot is already u
     \item The x-location of the center of mass can be adjusted in the \textit{COM-X Offset (m)} field. Then click the "Balance" button to send the command.
     \item The squat height of the robot can be adjusted by sliding the \textit{Height} slider up and down, which automatically sends the command to the robot.
   \end{enumerate}
-
-\subsection{Manipulation}
+  
+\pagebreak
+\section{Manipulation}
 This section describes how to teleoperate Hubo in order to dual-arm manipulate objects in the environment.
 NB: First install all software outlined in \nameref{sec:code-repos}
 \begin{enumerate}
   \item If you haven't already, start up ROS
-    \begin{lstlisting}[language=bash]
-  		$ roscore
-  		$ rosrun rviz rviz
-	\end{lstlisting}
+  \begin{lstlisting}[language=bash]
+  $ roscore
+  $ rosrun rviz rviz
+  \end{lstlisting}
   \item Start the teleoperation interface
-    \begin{lstlisting}[language=bash]
-  		$ roslaunch hubo_motion_ros fullbody_teleop.launch
-	\end{lstlisting}
-  \item (Optional) Start up the Vision package by following the instructions in \nameref{sec:starting-up-perception}.
+  \begin{lstlisting}[language=bash]
+  $ roslaunch hubo_motion_ros fullbody_teleop.launch
+  \end{lstlisting}
 \end{enumerate}
   \begin{figure}[ht]
     \centering
@@ -264,7 +272,7 @@ NB: First install all software outlined in \nameref{sec:code-repos}
 % TROUBLESHOOTING
 %
 \clearpage
-\section{Troubleshooting}\label{sec:troubleshooting}
+\chapter{Troubleshooting}\label{chap:troubleshooting}
 \begin{table}[ht]
   \centering
   \caption{Troubleshooting Table}
