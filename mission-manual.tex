@@ -89,22 +89,81 @@
 	\item \url{https://github.com/golems/hubomz}
 	\end{itemize}
 \end{itemize}
-
 \newpage
+
+% -------------------------------------------------------------------------------------
+% WALL DRILLING INTRO
+%
 \section*{Wall Drilling Task}
 
 \subsection*{Procedure}
-\begin{itemize}
-\item 
-\end{itemize}
-\begin{center}
-\includegraphics[width=8.0cm]{resources/wall-drilling}
-\end{center}
+\begin{enumerate}
+\item Identify the drill using robot/human judgement from robot perception feedback.
+\item Walk to the drill and pick it up using vision and teleopration from the hubo\_maniupaltion\_planner panel.
+\item Identify wall location using human judgement of robot perception.
+\item Walk to the wall and face it using the hubo\_walk panel.
+\item Begin static balancing using hubo\_walk panel.
+\item Use hubo\_manipulation\_planner to identify points on the wall defining polygon to drill out and it's distance away from the wall. Step closer if needed.
+\item Send the points in 6-dimensions to the manipulation daemon using the end-effector interpolation mode to drill the object out.
+\item Remove drill from wall and place on table or drop.
+\end{enumerate}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=5.0cm]{resources/wall-drilling}
+  \caption{Picture of example target to drill out.}
+  \label{fig:Wall-image}
+\end{figure}
 
 \newpage
-\section*{Rubble Clearing Task}
-\includegraphics[width=8.0cm]{resources/rubble-clearing}
 
+% -------------------------------------------------------------------------------------
+% RUBBLE CLEARING INTRO
+%
+\section*{Rubble Clearing Task}
+\begin{enumerate}
+\item Identify the location of the rubble/door using robot/human judgement from robot perception feedback.
+\item Walk to the rubble and face it using the hubo\_walk panel.
+\item Begin static balancing and squat to height which allows picking up rubble items.
+\item Use dual-arm teleoperation to pick up the pieces of rubble and toss them to the side.
+\end{enumerate}
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=5.0cm]{resources/rubble-clearing}
+  \caption{Picture of example rubble scene.}
+  \label{fig:Rubble-image}
+\end{figure}
+
+\newpage
+
+% -------------------------------------------------------------------------------------
+% INSTRUCTIONS
+%
+\section*{Operation Instructions}
+\subsection*{Starting up Hubo}
+\begin{enumerate}
+  \item ssh hubo@192.168.0.201
+  \item Turn on motor controllers with remote
+  \item sudo service hubo-motion start
+  \item launch RViz
+    \begin{itemize}
+    	  \item roscore
+    	  \item rosrun rviz rviz
+    \end{itemize}
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=15.0cm]{resources/hubo-init.pdf}
+    \caption{Picture of hubo\_init panel.}
+    \label{fig:hubo-init-image}
+  \end{figure}
+  \item Ensure "IP Address" is correct.
+  \item Click "Connect" to push and pull ach channels between Hubo's computer and the remote computer.
+  \item Click "Home All" to home all of Hubo's joints, if not on the ground and not homed. If already homed and standing, continue skip to step.
+  \item If any active joints do not home, indicated by the color in the \textit{Joint State} section not being gray.
+\end{enumerate}
+
+% -------------------------------------------------------------------------------------
+% TROUBLESHOOTING
+%
 
 % -------------------------------------------------------------------------------------
 % REFERENCES
