@@ -84,40 +84,29 @@ Code repositories that run in real-time on the robot.
 \subsection{ROS Code}
 Code repositories that use ros-groovy.
 \begin{itemize}
-\item hubo\_init
+\item hubo\_init : GUI for initializing Hubo and controlling hubo-ach level settings
   \begin{itemize}
 	\item \url{https://github.com/hubo/hubo\_init/}
 	  \begin{itemize}
 	    \item Dependencies: \textit{hubo-ach}
 	  \end{itemize}
   \end{itemize}
-\item hubo\_walk
+\item hubo\_walk : GUI for ZMP walk generator
   \begin{itemize}
 	\item \url{https://github.com/hubo/hubo\_walk}
 	  \begin{itemize}
 	    \item Dependencies: \textit{hubo-motion-rt, hubomz}
 	  \end{itemize}
   \end{itemize}
-\item hubo\_urdf
+\item joystick\_integrator : Converts SpaceNav joystick positions to 3D poses
   \begin{itemize}
-    \item \url{https://github.com/a-price/hubo\_urdf}
+    \item \url{https://github.com/a-price/joystick\_integrator}
   \end{itemize}
-\item rgbd\_graph\_segmentation
-  \begin{itemize}
-    \item \url{https://github.com/a-price/rgbd\_graph\_segmentation}
-  \end{itemize}
-\item hubo\_motion\_ros
+\item hubo\_motion\_ros : Provides joint-level and end-effector-level teleoperation, MoveIt-based kinematics server, and temporary ROS trajectory executor.
   \begin{itemize}
 	\item \url{https://github.com/a-price/hubo\_motion\_ros}
 	  \begin{itemize}
-	    \item Dependencies: \textit{hubo\_urdf, rgbd\_graph\_segmentation, ros-groovy-control-msgs}
-	  \end{itemize}
-  \end{itemize}
-\item hubo\_manipulation\_planner
-  \begin{itemize}
-	\item \url{https://github.com/hubo/hubo\_manipulation\_planner}
-	  \begin{itemize}
-	    \item Dependencies: \textit{hubo\_urdf, rgbd\_graph\_segmentation, ros-groovy-control-msgs}
+	    \item Dependencies: \textit{hubo\_ros\_core, joystick\_integrator, drchubo, ros-groovy-control-msgs, ros-groovy-moveit-msgs}
 	  \end{itemize}
   \end{itemize}
 \end{itemize}
@@ -210,8 +199,15 @@ This section describes how to start-up Hubo.
   \item Click on the \textit{Sensor State} tab and ensure the sensor values are updating and are reasonable. If they aren't, then restart the whole process.
 \end{enumerate}
 
-\subsection{Starting-up Perception}
-This section describes how to get the perception pipeline up and running. 
+\subsection{Starting-up Perception} \label{sec:starting-up-perception}
+This section is heavily under construction. Generally, what you will need to do is probably something like this:
+  \begin{lstlisting}[language=bash]
+    $ roslaunch openni2_launch openni2.launch
+  \end{lstlisting}
+Or, hopefully when everything gets straightened out, it will be like:
+  \begin{lstlisting}[language=bash]
+    $ roslaunch hubo_vision_common full.launch
+  \end{lstlisting}
 
 \subsection{Walking}
 This section describes how to make Hubo walk. And assumes the robot is already up and running and standing on the ground on two feet.
@@ -237,6 +233,7 @@ This section describes how to make Hubo walk. And assumes the robot is already u
 
 \subsection{Manipulation}
 This section describes how to teleoperate Hubo in order to dual-arm manipulate objects in the environment.
+NB: First install all software outlined in \nameref{sec:code-repos}
 \begin{enumerate}
   \item If you haven't already, start up ROS
     \begin{lstlisting}[language=bash]
@@ -247,6 +244,7 @@ This section describes how to teleoperate Hubo in order to dual-arm manipulate o
     \begin{lstlisting}[language=bash]
   		$ roslaunch hubo_motion_ros fullbody_teleop.launch
 	\end{lstlisting}
+  \item (Optional) Start up the Vision package by following the instructions in \nameref{sec:starting-up-perception}.
 \end{enumerate}
   \begin{figure}[ht]
     \centering
