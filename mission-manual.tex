@@ -246,6 +246,15 @@ NB: First install all software outlined in \nameref{chap:code-repos}
   $ roscore
   $ rosrun rviz rviz
   \end{lstlisting}
+  Configuring RViz interface
+  \begin{itemize}
+    \item If the Displays panel is not visible already, click on the Panels menu and click on Displays.
+    \item Under Global Options, set Fixed Frame to /Body\_RAP.
+    \item Click Add and scroll to RobotModel.
+    \item Click Add and scroll to Pose. Set Topic to /rh\_pose. Set Axes Length to 0.1 and Axes Radius to 0.01.
+    \item Click Add and scroll to TF. Set Marker Scale to 0.1.
+    \item Click Add and scroll to InteractiveMarkers. Set Topic to /joint\_controls/update.
+  \end{itemize}
   \item Start the teleoperation interface
   \begin{lstlisting}[language=bash]
   $ roslaunch hubo_motion_ros fullbody_teleop.launch
