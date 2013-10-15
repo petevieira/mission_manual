@@ -1,5 +1,5 @@
 \documentclass[letterpaper, 10 pt]{report}
-
+\usepackage{hyperref}
 % For handling graphics
 \usepackage{graphicx}
 % For multirows in tables
@@ -205,14 +205,28 @@ This section describes how to start-up Hubo.
 \end{enumerate}
 
 \section{Starting-up Perception} \label{sec:starting-up-perception}
-This section is heavily under construction. Generally, what you will need to do is probably something like this:
+This section is heavily under construction. Generally, what you will need to do is something like this:
   \begin{lstlisting}[language=bash]
-    $ roslaunch openni2_launch openni2.launch
+    $ roslaunch hubo_drc_vision hubo_openni.launch
   \end{lstlisting}
-Or, hopefully when everything gets straightened out, it will be like:
+  
+\pagebreak
+\section{Camera Calibration} \label{sec:calibration}
+In many circumstances, you may find that an approximate camera calibration is insufficient for real manipulation tasks.
+In order to alleviate this problem, the intrinsic and extrinsic properties of the camera need to be computed.
+For intrinsic calibration, we used the ROS package camera\_calibration (\url{http://wiki.ros.org/camera_calibration}). If using a PrimeSense camera, both the infrared and rgb cameras will need to have their intrinsics calibrated as documented in the package.
+
+For extrinsic calibration, we have written a small subroutine to assist with the calculation.
+There are several steps:
+\begin{enumerate}
+  \item Attach checkerboards to the flat places on the hands. Example checkerboards are provided in the hubo\_gt\_ros/hubo\_drc\_vision/resources folder.
+  \item Measure the transform from the hand origin to the checkerboard origin. These values are currently hard-coded for a single checkerboard in the main function of camera\_calib.cpp; this needs to be expanded to accept ROS parameters.
+  \item Launch the calibration procedure as follows:
   \begin{lstlisting}[language=bash]
-    $ roslaunch hubo_vision_common full.launch
+    $ roslaunch hubo_drc_vision calibrate_camera.launch
   \end{lstlisting}
+  This will load a list of joint angles from a csv file and play that "trajectory" through the motion pipeline. A second node will monitor the vision system and will compute the least-squares transform that best solves the system of observed and expected points. This transform will be published into TF, and the results can be viewed in RVIZ (use calibration.rviz to automatically configure RVIZ to display the relevant topics).
+\end{enumerate}
 
 \pagebreak
 \section{Walking}
