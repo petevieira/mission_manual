@@ -252,7 +252,7 @@ This section describes how to make Hubo walk. And assumes the robot is already u
   
 \pagebreak
 \section{Manipulation}
-This section describes how to teleoperate Hubo in order to dual-arm manipulate objects in the environment.
+This section describes how to teleoperate Hubo in order to manipulate objects in the environment with either or both arms.
 NB: First install all software outlined in \nameref{chap:code-repos}
 \begin{enumerate}
   \item If you haven't already, start up ROS
@@ -264,14 +264,16 @@ NB: First install all software outlined in \nameref{chap:code-repos}
   \begin{itemize}
     \item If the Displays panel is not visible already, click on the Panels menu and click on Displays.
     \item Under Global Options, set Fixed Frame to /Body\_RAP.
-    \item Click Add and scroll to RobotModel.
+    \item Click Add and scroll to RobotModel. Set topic to robot\_description. Set alpha to 0.5. If the model does not appear, uncheck and check the RobotModel checkbox.
+    \item Click Add and scroll to RobotModel. Set topic to robot\_planning\_description. If the model does not appear, uncheck and check the RobotModel checkbox.
     \item Click Add and scroll to Pose. Set Topic to /rh\_pose. Set Axes Length to 0.1 and Axes Radius to 0.01.
     \item Click Add and scroll to TF. Set Marker Scale to 0.1.
     \item Click Add and scroll to InteractiveMarkers. Set Topic to /joint\_controls/update.
   \end{itemize}
-  \item Start the teleoperation interface
+  \item Start the teleoperation interface and state feedback
   \begin{lstlisting}[language=bash]
   $ roslaunch hubo_motion_ros fullbody_teleop.launch
+  $ roslaunch hubo_motion_ros hubo_state.launch
   \end{lstlisting}
   \item (Optional) Start up Vision system as discussed in \nameref{sec:starting-up-perception}.
 \end{enumerate}
@@ -287,8 +289,6 @@ NB: First install all software outlined in \nameref{chap:code-repos}
     \caption{Simplified ROS Graph created by fullbody\_teleop.launch.}
     \label{fig:teleop-rosgraph-image}
   \end{figure}
-
-
 
 % -------------------------------------------------------------------------------------
 % Upocoming Features
