@@ -57,7 +57,7 @@
 %
 \chapter{Code Repositories}\label{chap:code-repos}
 The following code repositories are required in order to execute our tasks using our code. They consist of real-time processes that run on the robot, and code that uses ROS and runs mostly on a local computer.
-\section{Real-time Code}
+\section{Main Code}
 Code repositories that run in real-time on the robot.
 \begin{itemize}
 \item hubo-ach
@@ -67,49 +67,35 @@ Code repositories that run in real-time on the robot.
 	    \item Dependencies: \textit{ach, libreadline.}
 	  \end{itemize}
   \end{itemize}
-\item hubo-motion-rt
-	\begin{itemize}
-	\item \url{https://github.com/hubo/hubo-motion-rt}
-	  \begin{itemize}
-	    \item Dependencies: \textit{hubo-ach, RobotKin, urdfdom, eigen3.}
-	  \end{itemize}
-  \end{itemize}
-\item hubomz
+\item hubo\_gt
   \begin{itemize}
-	\item \url{https://github.com/golems/hubomz}
-	  \begin{itemize}
-	    \item Dependencies: \textit{hubo-ach, hubo-motion-rt, expat, freeglut3.} 
-	  \end{itemize}
+	\item \url{https://github.com/golems/hubo_gt}
   \end{itemize}
 \end{itemize}
-\section{ROS Code}
-Code repositories that use ros-groovy.
+\section{Major Dependencies}
 \begin{itemize}
-\item hubo\_init : GUI for initializing Hubo and controlling hubo-ach level settings
-  \begin{itemize}
-	\item \url{https://github.com/hubo/hubo\_init/}
-	  \begin{itemize}
-	    \item Dependencies: \textit{hubo-ach}
-	  \end{itemize}
-  \end{itemize}
-\item hubo\_walk : GUI for ZMP walk generator
-  \begin{itemize}
-	\item \url{https://github.com/hubo/hubo\_walk}
-	  \begin{itemize}
-	    \item Dependencies: \textit{hubo-motion-rt, hubomz}
-	  \end{itemize}
-  \end{itemize}
-\item joystick\_integrator : Converts SpaceNav joystick positions to 3D poses
-  \begin{itemize}
-    \item \url{https://github.com/a-price/joystick\_integrator}
-  \end{itemize}
-\item hubo\_motion\_ros : Provides joint-level and end-effector-level teleoperation, MoveIt-based kinematics server, and temporary ROS trajectory executor.
-  \begin{itemize}
-	\item \url{https://github.com/a-price/hubo\_motion\_ros}
-	  \begin{itemize}
-	    \item Dependencies: \textit{hubo\_ros\_core, joystick\_integrator, drchubo, ros-groovy-control-msgs, ros-groovy-moveit-msgs}
-	  \end{itemize}
-  \end{itemize}
+  \item \url{https://github.com/hubo/hubo-ach} (master)
+  \item \url{https://github.com/a-price/drchubo} (develop)
+  \item \url{https://github.com/arebgun/dynamixel\_motor} (master)
+  \item \url{https://github.com/hubo/hubo\_planning\_common} (master)
+  \item \url{https://github.com/hubo/hubo\_vision\_common} (master)
+  \item \url{https://github.com/hubo/hubo\_ros\_core} (master)
+\end{itemize}
+\section{Minor Dependencies}
+Dependencies that can be install with \textit{apt-get install}
+\begin{itemize}
+  \item libeigen3-dev
+  \item ros-groovy-urdfdom
+  \item ros-groovy-control-msgs
+  \item ros-groovy-moveit-msgs
+  \item expat
+  \item freeglut3-dev
+  \item ros-groovy-libccd
+\end{itemize}
+\section{Vision}
+\begin{itemize}
+  \item \url{https://github.com/ros-drivers/openni2\_camera} (groovy-devel)
+  \item \url{https://github.com/ros-drivers/openni2\_launch} (groovy-devel)
 \end{itemize}
 \newpage
 
@@ -162,6 +148,22 @@ Code repositories that use ros-groovy.
 % -------------------------------------------------------------------------------------
 % INSTRUCTIONS
 %
+
+\chapter{System Setup}\label{chap:system-setup}
+This section describes how to get everything on the operators computer up and running with RViz.
+\section{RViz Setup}
+\begin{enumerate}
+  \item After successfully running \textit{catkin\_make} launch \textit{roscore} by typing the following command into the terminal.
+  \begin{lstlisting}
+  roscore
+  \end{lstlisting}
+  \item Then in a second terminal start your RViz session with
+  \begin{lstlisting}
+  rosrun rviz rviz
+  \end{lstlisting}
+\end{enumerate}
+
+\pagebreak
 \chapter{Operation Instructions}\label{chap:operating-instructions}
 This section details how to operate Hubo from the initialization phase to execution of the tasks. The different phases include \textit{Starting-up Hubo}, \textit{Starting-up Perception}, \textit{Walking}, and \textit{Teleop Manipulation}.
 \section{Starting-up Hubo}
