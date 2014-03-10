@@ -168,16 +168,24 @@ This section details how to operate Hubo from the initialization phase to execut
 \section{Starting-up Hubo}
 This section describes how to start-up Hubo.
 \begin{enumerate}
+  \item Make sure your computer is connected to the local Humanoids router via Ethernet or to the \textbf{humanoids} or \textbf{humanoids-5} wireless network.
   \item Turn on motor controllers with remote
-  \item Connect to Hubo's computer using ssh, and start the pipeline.
+  \item Connect to Hubo's computer using ssh.
   \begin{lstlisting}[language=bash]
-  $ ssh hubo@192.168.0.201
-  $ ssh sudo service hubo-motion start
+  $ ssh hubo@hubo-ach-beta-1
+  	(Note: password: hubo1234)
   \end{lstlisting}
-  \item On your local computer (outside of the ssh sesion), launch RViz
+  \item \textbf{IMPORTANT: }Turn on power to the motor control boards before starting the daemons
+  \item Now start the daemons from the ssh session connected to Hubo's computer
+  \begin{lstlisting}
+  $ ssh sudo service hubo-motion teleop
+  \end{lstlisting}
+  \item On your local computer (outside of the ssh sesion), start a ROS master, launch RViz, start the state publisher and the fullbody\_teleop nodes.
   \begin{lstlisting}[language=bash]
-  $ roscore
-  $ rosrun rviz rviz
+  $ roscore (Terminal 1)
+  $ rosrun rviz rviz (Terminal 2)
+  $ roslaunch hubo_motion_ros hubo_state.launch (Terminal 3)
+  $ roslaunch hubo_motion_ros fullbody_teleop.launch (Terminal 4)
   \end{lstlisting}
   \item Click on the \textit{HuboInitPanel} panel tab.
   \begin{figure}[ht]
@@ -186,10 +194,11 @@ This section describes how to start-up Hubo.
     \caption{Picture of hubo\_init panel.}
     \label{fig:hubo-init-image}
   \end{figure}
-  \item Ensure "IP Address" is correct.
+  \item On the \textbf{Joint Command} tab ensure "IP Address" is correct.
   \item Click "Connect" to send and receive ach channels between Hubo's computer and the remote computer. If it won't connect see the Troubleshooting section.
-  \item Click "Home All" to home all of Hubo's joints, if not on the ground and not homed. If already homed and standing, continue skip to step.
-  \item If any active joints do not home, indicated by the color in the \textit{Joint State} section not being gray, click the "Rehome". Button color meanings are
+  \item To check if it is indeed connected and receiver ach frames, click on the \textbf{Sensor State} tab in HuboInitPanel and make sure the sensor values are changing. If they are not, then something was most likely done out of order.
+  \item Make sure Hubo is sufficiently raised above the ground and click "Home All" to home all of Hubo's joints.
+  \item If any active joints do not home, indicated by the color in the \textit{Joint State} section not being gray, click the "Rehome" button. Button color meanings are
     \begin{itemize}
       \item GRAY: homed
       \item PURPLE: not homed
@@ -199,10 +208,12 @@ This section describes how to start-up Hubo.
   \item If any joints won't home, you can do one of two options:
     \begin{enumerate}
       \item Click the \textit{Reset} radio button and then click the joint(s) that won't home. Then click the \textit{Home} radio button and click the joint(s) that didn't home. Then press the ``Rehome'' button again.
-      \item Run ``sudo service hubo-motion stop'', turn off the motor power, wait a moment, turn it back on, and run ``sudo service hubo-motion start''. Then try homing again from the beginning.
+      \item Run ``sudo service hubo-motion stop'', turn off the motor power, wait a moment, turn it back on, and run ``sudo service hubo-motion teleop''. Then try homing again from the beginning. If this doesn't work, Hubo's computer needs to be rebooted and you need to start over from step 1. Basically the CAN line gets corrupted if the daemons are started while the power to the motor control boards is off.
     \end{enumerate}
   \item Once the joints are all homed, press the "Start Sensors" button to initialize the IMU and Force/Torque sensors.
   \item Click on the \textit{Sensor State} tab and ensure the sensor values are updating and are reasonable. If they aren't, then restart the whole process.
+  \item Now you click on the \textbf{HuboMotionPanel} tab and click the \textbf{Connect} button.
+  \item Click the \textbf{Teleop} button on the top right.
 \end{enumerate}
 
 \section{Starting-up Perception} \label{sec:starting-up-perception}
