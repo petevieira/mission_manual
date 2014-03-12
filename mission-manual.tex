@@ -203,7 +203,7 @@ There are several steps:
 
 \pagebreak
 \section{Walking}
-This section describes how to make HUubo walk. And assumes the robot is already up and running and standing on the ground on two feet.
+This section describes how to make HUBO walk. And assumes the robot is already up and running and standing on the ground on two feet.
   \begin{enumerate}
     \item Click on the \textit{HuboWalkPanel} tab.
     \begin{figure}[ht]
@@ -289,15 +289,16 @@ features we consider to be crucial for successful teleoperation of the task.
   \caption{Troubleshooting Table}
   \begin{tabular}{|p{4.5cm}|p{4.5cm}|p{4.5cm}|} \hline
     \multicolumn{1}{|c|}{Symptom} & \multicolumn{1}{|c|}{Causes} & \multicolumn{1}{|c|}{Solution} \\ \hline
-    Can't ssh to HUBO \end{enumerate} & \begin{enumerate} \item Connect to the correct network. \item Ensure daemons are running by typing \textit{ps aux $|$ grep daemon} or restarting HUBO and running \textit{sudo service hubo-motion start}. \end{enumerate} \\
+    Can't ssh to HUBO's PC & \begin{enumerate} \item Not on correct network. \item Hubo's PC is stuck in the Grub menu \end{enumerate} & \begin{enumerate} \item Connect to the correct network. \item Connect a monitor and keyboard to Hubo's PC and debug, or just a keyboard and press enter. \end{enumerate} \\
+    \hline
+    Can't connect to the robot in RViz panel & \begin{enumerate} \item Not on the correct network. \item The daemons are not running on Hubo \end{enumerate} & \begin{enumerate} \item Connect to the correct network. \item Ensure daemons are running by typing \textit{ps aux $|$ grep daemon} or restarting Hubo and running \textit{sudo service hubo-motion start}. \end{enumerate} \\
     \hline
     Receiving ACH\_OVERFLOW from rviz command. \newline HuboInitPanel joint names don't showing up correctly. & Don't have matching or most up-to-date installs of hubo-ach, hubo-motion-rt, hubomz or possible another repo. & Make sure you are on the right branch in each repo and reinstall on both machines. \\
     \hline
-    Robot homes only the upper or lower body, or neither. & CAN line got corrupted. & Shutdown and turn off the HUBO PC and turn it back on and try again. \\
+    Robot homes only the upper or lower body, or neither. & CAN line got corrupted. & Shutdown and turn off the Hubo PC and turn it back on and try again. \\
     \hline
   \end{tabular} \label{tbl:troubleshooting}
 \end{table}
-
 
 % -------------------------------------------------------------------------------------
 % REFERENCES
