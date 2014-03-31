@@ -64,18 +64,18 @@ Code repositories that run in real-time on the robot.
 \begin{itemize}
 \item hubo\_gt
   \begin{itemize}
-	\item \url{https://github.com/golems/hubo_gt}
+	\item \url{https://github.com/golems/hubo_gt} (develop)
   \end{itemize}
 \end{itemize}
 \section{Major Dependencies(To Do: check forked repos)}
 \begin{itemize}
   \item \url{https://github.com/golems/hubo-ach} (master, installation required)
-  \item \url{https://github.com/arebgun/dynamixel_motor} (master)
+  \item \url{https://github.com/calderpg/dynamixel_motor} (master)
   \item \url{https://github.com/hubo/hubo_planning_common} (master)
-  \item \url{https://github.com/hubo/hubo_vision_common} (master)
-  \item \url{https://github.com/hubo/hubo_ros_core} (master)
-  \item \url{https://github.com/hubo/hubo_ros_control} (master)
-  \item \url{https://github.com/hubo/hubo_head_description}
+  \item \url{https://github.com/golems/hubo_vision_common} (catkinize)
+  \item \url{https://github.com/golems/hubo_ros_core} (master)
+  \item \url{https://github.com/golems/hubo_ros_control} (master)
+  \item \url{https://github.com/golems/hubo_head_description}
    (master)
   \item \url{https://github.com/golems/teleop_toolkit} (master)
 \end{itemize}
@@ -178,6 +178,13 @@ This section describes how to start-up HUBO.
 \end{enumerate}
 
 \section{Starting-up Perception} \label{sec:starting-up-perception}
+Post DRC-Trials start-up procedure:
+  \begin{lstlisting}[language=bash]
+    $ roslaunch hubo_drc_vision hubo_flea3_remote.launch
+    $ roslaunch hubo_drc_vision hubo_vision_workstation.launch
+    $ roslaunch hubo_drc_vision hubo_gt_backpack.launch
+  \end{lstlisting}
+
 This section is heavily under construction. Generally, what you will need to do is something like this:
   \begin{lstlisting}[language=bash]
     $ roslaunch hubo_drc_vision hubo_openni.launch
